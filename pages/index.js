@@ -10,10 +10,35 @@ import {
 import { Canvas, useFrame } from "@react-three/fiber";
 
 
-export function Sword(props) {
+export function Sting1(props) {
   const ref = useRef()
 
-  const { nodes, materials } = useGLTF('/sword-lower-res-compressed.glb')
+  const { nodes, materials } = useGLTF('/sting-compressed.glb')
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime()
+    ref.current.rotation.z = -0.2 - (1 + Math.sin(t / 1.5)) / 20
+    ref.current.rotation.x = Math.cos(t / 4) / 8
+    ref.current.rotation.y = Math.sin(t / 4) / 8
+    ref.current.position.y = (1 + Math.sin(t / 1.5)) / 10
+  })
+
+  return (
+    <group {...props} dispose={null} ref={ref}>
+      <group rotation={[-Math.PI / 2, 0, 0]}>
+        <mesh geometry={nodes.Object_2.geometry} material={materials.Blade} />
+        <mesh geometry={nodes.Object_3.geometry} material={materials.Grip} />
+        <mesh geometry={nodes.Object_4.geometry} material={materials.Guard} />
+        <mesh geometry={nodes.Object_5.geometry} material={materials.Pommel} />
+      </group>
+    </group>
+  )
+}
+
+export function Sting(props) {
+  const ref = useRef()
+
+  const { nodes, materials } = useGLTF('/sting-lowpoly-compressed.glb')
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime()
@@ -27,19 +52,18 @@ export function Sword(props) {
     <group {...props} dispose={null} ref={ref}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <group rotation={[Math.PI / 2, 0, 0]}>
-          <group position={[0, 0.08, 0]}>
-            <mesh geometry={nodes.pPlane1_phong1_0.geometry} material={materials.phong1} />
+          <group position={[0, 0, 11.76]} rotation={[-Math.PI / 2, 0, 0]}>
+            <mesh geometry={nodes.Garde_Sting_0.geometry} material={materials.Sting} />
           </group>
-          <mesh geometry={nodes.pPlane5_phong1_0.geometry} material={materials.phong1} />
-          <group position={[12.55, 0.26, 0]}>
-            <mesh geometry={nodes.polySurface2_phong1_0.geometry} material={materials.phong1} />
+          <group position={[0, 0, 27.96]} rotation={[-Math.PI / 2, 0, 0]}>
+            <mesh geometry={nodes.Pommeau_Sting_0.geometry} material={materials.Sting} />
           </group>
-          <mesh geometry={nodes.polySurface5_phong1_0.geometry} material={materials.phong1} />
-          <mesh geometry={nodes.polySurface4_phong1_0.geometry} material={materials.phong1} />
-          <group position={[9.11, 0, 0]}>
-            <mesh geometry={nodes.pCube1_phong1_0.geometry} material={materials.phong1} />
+          <group rotation={[-Math.PI / 2, 0, 0]}>
+            <mesh geometry={nodes.Manche_Sting_0.geometry} material={materials.Sting} />
           </group>
-          <mesh geometry={nodes.pPlane4_phong1_0.geometry} material={materials.phong1} />
+          <group rotation={[-Math.PI / 2, 0, 0]}>
+            <mesh geometry={nodes.Lame_Sting_0.geometry} material={materials.Sting} />
+          </group>
         </group>
       </group>
     </group>
@@ -55,12 +79,12 @@ export default function Home() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-      <Canvas camera={{ position: [0, 40, 20], fov: 40 }}>
+      <Canvas camera={{ position: [-100, 100, 10], fov: 40 }}>
         <ambientLight intensity={0.7} />
         <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow />
 
         <Suspense fallback={null}>
-          <Sword />
+          <Sting />
           <Environment files="autumn-forest-1k.hdr" />
         </Suspense>
         <OrbitControls />
