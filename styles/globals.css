@@ -3,8 +3,6 @@ body {
   margin: 0;
   height: 100%;
   min-height: 100%;
-  background: #5c6061;
-  background-image: url("/autumn-forest-godrays.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -17,7 +15,14 @@ body {
   height: 100%;
 }
 
-canvas {
-  height: 100vh;
+.container {
+  position: relative;
   width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+canvas {
+  height: 100%;
+  width: 100%;
 }

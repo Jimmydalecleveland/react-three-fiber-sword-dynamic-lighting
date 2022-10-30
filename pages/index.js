@@ -1,39 +1,14 @@
-import Head from 'next/head'
-
 import React, { useRef, Suspense } from "react";
+import Head from 'next/head'
+import Image from 'next/image';
 import {
   useGLTF,
   OrbitControls,
   Environment,
-  ContactShadows,
 } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 
-
-export function Sting1(props) {
-  const ref = useRef()
-
-  const { nodes, materials } = useGLTF('/sting-compressed.glb')
-
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime()
-    ref.current.rotation.z = -0.2 - (1 + Math.sin(t / 1.5)) / 20
-    ref.current.rotation.x = Math.cos(t / 4) / 8
-    ref.current.rotation.y = Math.sin(t / 4) / 8
-    ref.current.position.y = (1 + Math.sin(t / 1.5)) / 10
-  })
-
-  return (
-    <group {...props} dispose={null} ref={ref}>
-      <group rotation={[-Math.PI / 2, 0, 0]}>
-        <mesh geometry={nodes.Object_2.geometry} material={materials.Blade} />
-        <mesh geometry={nodes.Object_3.geometry} material={materials.Grip} />
-        <mesh geometry={nodes.Object_4.geometry} material={materials.Guard} />
-        <mesh geometry={nodes.Object_5.geometry} material={materials.Pommel} />
-      </group>
-    </group>
-  )
-}
+import autumnBackground from '../public/autumn-forest-godrays.jpg';
 
 export function Sting(props) {
   const ref = useRef()
@@ -79,7 +54,9 @@ export default function Home() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-      <Canvas camera={{ position: [-100, 100, 10], fov: 40 }}>
+      <Image src={autumnBackground} alt="Autumn background" layout="fill" fill style={{ objectFit: "cover" }} />
+      <Canvas camera={{ position: [0, 100, 10], fov: 40 }}>
+
         <ambientLight intensity={0.7} />
         <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow />
 
@@ -89,6 +66,8 @@ export default function Home() {
         </Suspense>
         <OrbitControls />
       </Canvas>
+
+
     </div>
   )
 }
