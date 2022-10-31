@@ -26,3 +26,22 @@ canvas {
   height: 100%;
   width: 100%;
 }
+
+nav {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+
+  display: flex;
+  gap: 20px;
+}
+
+.attribution {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  right: 0;
+  color: rgb(80, 80, 80);
+}
